@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 // https://github.com/projectsophon/hardhat-circom
@@ -7,6 +9,11 @@ import circuits = require('./circuits.config.json')
 
 // set env var to the root of the project
 process.env.BASE_PATH = __dirname;
+
+// env error
+if (!process.env.PRIVATE_KEY) {
+  throw new Error("Please set your PRIVATE_KEY in a .env file");
+}
 
 // tasks
 import "./tasks/newcircuit.ts"
@@ -30,6 +37,12 @@ const config: HardhatUserConfig = {
     // (required) Each object in this array refers to a separate circuit
     circuits: JSON.parse(JSON.stringify(circuits))
   },
+  networks:{
+    cardona:{
+      url:'https://rpc.cardona.zkevm-rpc.com',
+      accounts:[process.env.PRIVATE_KEY],
+    }
+  }
 };
 
 export default config;
