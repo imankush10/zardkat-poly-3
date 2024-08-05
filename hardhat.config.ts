@@ -37,9 +37,9 @@ const config: HardhatUserConfig = {
     // (required) Each object in this array refers to a separate circuit
     circuits: JSON.parse(JSON.stringify(circuits))
   },
-  networks:{
+   networks:{
     cardona:{
-      url:'https://rpc.cardona.zkevm-rpc.com',
+      url:process.env.POLYGON_ZKEVM_CARDONA_ALCHEMY_API_URL,
       accounts:[process.env.PRIVATE_KEY],
     }
   }
